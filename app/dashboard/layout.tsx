@@ -15,15 +15,9 @@ export default async function DashboardLayout({
     redirect("/auth/login");
   }
 
-  const userData = {
-    name: user.user_metadata?.full_name || user.email,
-    email: user.email,
-    avatar: user.user_metadata?.avatar_url,
-  };
-
   return (
     <SidebarProvider>
-      <AppSidebar user={userData} />
+      <AppSidebar user={user} />
       {children}
     </SidebarProvider>
   );

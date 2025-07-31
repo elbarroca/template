@@ -66,7 +66,33 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+      animation: {
+        "appear": "appear 0.5s ease-out forwards",
+        "appear-zoom": "appear-zoom 0.5s ease-out forwards",
+      },
+      keyframes: {
+        "appear": {
+          "from": {
+            "opacity": "0",
+            "transform": "translateY(10px)",
+          },
+          "to": {
+            "opacity": "1",
+            "transform": "translateY(0)",
+          },
+        },
+        "appear-zoom": {
+            "from": {
+                "opacity": "0",
+                "transform": "scale(0.95)",
+            },
+            "to": {
+                "opacity": "1",
+                "transform": "scale(1)",
+            },
+        }
+      }
   	}
   },
   plugins: [require("tailwindcss-animate")],

@@ -1,51 +1,72 @@
-import { DeployButton } from "@/components/deploy-button";
-import { EnvVarWarning } from "@/components/env-var-warning";
-import { AuthButton } from "@/components/auth-button";
-import { Hero } from "@/components/hero";
-import { ThemeSwitcher } from "@/components/theme-switcher";
-import { ConnectSupabaseSteps } from "@/components/tutorial/connect-supabase-steps";
-import { SignUpUserSteps } from "@/components/tutorial/sign-up-user-steps";
-import { hasEnvVars } from "@/lib/utils";
-import Link from "next/link";
+// app/page.tsx
+import { HeroSection } from "@/components/landing/hero-section";
+import { createClient } from "@/lib/supabase/server";
+import { GlowingEffectDemo } from "@/components/landing/grid";
+import { FeaturesSectionWithHoverEffects } from "@/components/landing/features";
+import Pricing from "@/components/landing/pricing";
+import  Testimonials  from "@/components/landing/testimonials";
+import { BackgroundPaths } from "@/components/landing/cta";
+import { Footer } from "@/components/landing/footer";
+import { FeatureImages } from "@/components/landing/feature-images";
+import { AnimatedSection } from "@/components/landing/animated-section";
+import { AuroraText } from "@/components/magicui/aurora-text";
+import { LineShadowText } from "@/components/magicui/line-shadow-text";
 
-export default function Home() {
+
+export default async function LandingPage() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
   return (
-    <main className="min-h-screen flex flex-col items-center">
-      <div className="flex-1 w-full flex flex-col gap-20 items-center">
-        <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-          <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
-            <div className="flex gap-5 items-center font-semibold">
-              <Link href={"/"}>Next.js Supabase Starter</Link>
-              <div className="flex items-center gap-2">
-                <DeployButton />
-              </div>
+    <main className="min-h-screen flex flex-col">
+        <AnimatedSection>
+          <HeroSection user={user} />
+        </AnimatedSection>        
+        
+        <AnimatedSection delay={0.4}>
+          <div className="container mx-auto px-4 md:px-8 text-center mt-16">
+              <div className="flex justify-center">
+              <div className="border py-1 px-4 rounded-lg"><LineShadowText>Features</LineShadowText></div>
             </div>
-            {!hasEnvVars ? <EnvVarWarning /> : <AuthButton />}
-          </div>
-        </nav>
-        <div className="flex-1 flex flex-col gap-20 max-w-5xl p-5">
-          <Hero />
-          <main className="flex-1 flex flex-col gap-6 px-4">
-            <h2 className="font-medium text-xl mb-4">Next steps</h2>
-            {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-          </main>
-        </div>
 
-        <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
-          <p>
-            Powered by{" "}
-            <a
-              href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-              target="_blank"
-              className="font-bold hover:underline"
-              rel="noreferrer"
-            >
-              Supabase
-            </a>
-          </p>
-          <ThemeSwitcher />
-        </footer>
-      </div>
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tighter mt-5 font-sans">
+              Feature <AuroraText>Focus</AuroraText>
+            </h2>
+            <p className="text-center mt-5 opacity-75">
+              Discover the key features that make our product stand out.
+            </p>
+              <div className="mb-24 mt-12">
+              <GlowingEffectDemo />
+              </div>
+          </div>
+        </AnimatedSection>
+        <AnimatedSection delay={0.5}>
+          <FeatureImages user={user} />
+        </AnimatedSection>
+        <AnimatedSection delay={0.6}>
+          <div className="container mx-auto px-4 md:px-8 text-center mt-16">
+              <div className="flex justify-center">
+              <div className="border py-1 px-4 rounded-lg">More Features</div>
+            </div>
+
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tighter mt-5 font-sans">
+              Additional <AuroraText>Features</AuroraText>
+            </h2>
+            <p className="text-center mt-5 opacity-75">
+              Explore more features that enhance your experience.
+            </p>
+              <FeaturesSectionWithHoverEffects />
+          </div>
+        </AnimatedSection>
+        <AnimatedSection delay={0.7}>
+          <Pricing user={user} />
+        </AnimatedSection>
+        <AnimatedSection delay={0.8}>
+          <Testimonials />
+        </AnimatedSection>
+        <AnimatedSection delay={0.9}>
+          <BackgroundPaths user={user} />
+        </AnimatedSection>
+        <Footer />
     </main>
   );
 }

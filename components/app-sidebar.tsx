@@ -19,6 +19,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { User } from "@supabase/supabase-js"
 
 // This is sample data.
 const data = {
@@ -66,7 +67,7 @@ const data = {
   ],
 }
 
-export function AppSidebar({ user, ...props }: React.ComponentProps<typeof Sidebar> & { user: any }) {
+export function AppSidebar({ user, ...props }: React.ComponentProps<typeof Sidebar> & { user: User | null }) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="p-2 pt-4 items-center">
@@ -75,7 +76,7 @@ export function AppSidebar({ user, ...props }: React.ComponentProps<typeof Sideb
             <GalleryVerticalEnd className="size-4" />
           </div>
           <span className="text-md group-data-[collapsible=icon]:hidden">
-            Acme Inc.
+            Asme Inc.
           </span>
         </a>
       </SidebarHeader>
@@ -83,7 +84,13 @@ export function AppSidebar({ user, ...props }: React.ComponentProps<typeof Sideb
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={user} />
+        <NavUser
+          user={{
+            name: user?.user_metadata?.full_name || user?.email || "User",
+            email: user?.email || "",
+            avatar: user?.user_metadata?.avatar_url,
+          }}
+        />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

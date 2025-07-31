@@ -3,7 +3,6 @@
 import * as React from "react"
 import {
   ChevronsUpDown,
-  LogOut,
   Settings2,
   Sparkles,
 } from "lucide-react"
