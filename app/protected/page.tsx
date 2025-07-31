@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { InfoIcon } from "lucide-react";
 import { FetchDataSteps } from "@/components/tutorial/fetch-data-steps";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default async function ProtectedPage() {
   const supabase = await createClient();
@@ -31,6 +33,9 @@ export default async function ProtectedPage() {
         <h2 className="font-bold text-2xl mb-4">Next steps</h2>
         <FetchDataSteps />
       </div>
+      <Button asChild>
+        <Link href="/dashboard">Go to Dashboard</Link>
+      </Button>
     </div>
   );
 }
