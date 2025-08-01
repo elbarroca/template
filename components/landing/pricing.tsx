@@ -110,9 +110,9 @@ const Plan = ({ plan, billPlan }: { plan: PLAN, billPlan: Plan }) => {
     return (
         <div className={cn(
             "flex flex-col relative rounded-2xl lg:rounded-3xl transition-all bg-background/ items-start w-full border border-foreground/10 overflow-hidden",
-            plan.title === "Mastermind" && "border-orange-500"
+            plan.title === "Pro" && "border-orange-500"
         )}>
-            {plan.title === "Mastermind" && (
+            {plan.title === "Pro" && (
                 <div className="absolute top-1/2 inset-x-0 mx-auto h-12 -rotate-45 w-full bg-orange-600 rounded-2xl lg:rounded-3xl blur-[8rem] -z-10"></div>
             )}
 
@@ -143,7 +143,7 @@ const Plan = ({ plan, billPlan }: { plan: PLAN, billPlan: Plan }) => {
                     size="lg" 
                     className="w-full"
                     authenticatedHref="/dashboard"
-                    unauthenticatedHref="/auth/sign-up">
+                    unauthenticatedHref="/auth/login">
                     {plan.buttonText}
                 </AuthAwareButton>
                 <div className="h-8 overflow-hidden w-full mx-auto">

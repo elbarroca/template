@@ -8,8 +8,8 @@ import {
   Home,
   Settings2,
   SquareTerminal,
+  Sparkles,
 } from "lucide-react"
-
 import { NavMain } from "@/components/nav-main"
 import { NavUser } from "@/components/nav-user"
 import {
@@ -18,10 +18,14 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
 } from "@/components/ui/sidebar"
 import { User } from "@supabase/supabase-js"
+import { PricingDialog } from "./pricing-dialog"
+import { ThemeSwitcher } from "./ui/theme-switcher"
 
-// This is sample data.
 const data = {
   navMain: [
     {
@@ -67,7 +71,12 @@ const data = {
   ],
 }
 
-export function AppSidebar({ user, ...props }: React.ComponentProps<typeof Sidebar> & { user: User | null }) {
+export function AppSidebar({
+  user,
+  ...props
+}: React.ComponentProps<typeof Sidebar> & { user: User | null }) {
+  const isPremium = false // Placeholder until the data structure is fixed
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="p-2 pt-4 items-center">
@@ -84,13 +93,33 @@ export function AppSidebar({ user, ...props }: React.ComponentProps<typeof Sideb
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser
-          user={{
-            name: user?.user_metadata?.full_name || user?.email || "User",
-            email: user?.email || "",
-            avatar: user?.user_metadata?.avatar_url,
-          }}
-        />
+        <div className="flex flex-col gap-2">
+          {!isPremium && (
+            <PricingDialog>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <Sparkles className="size-4" />
+                    <span className="group-data-[collapsible=icon]:hidden">
+                      Upgrade to Pro
+                    </span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </PricingDialog>
+          )}
+          <div className="border rounded-lg">
+            <ThemeSwitcher />
+          </div>
+          <NavUser
+            user={{
+              name: user?.user_metadata?.full_name || user?.email || "User",
+              email: user?.email || "",
+              avatar: user?.user_metadata?.avatar_url,
+            }}
+            isPremium={isPremium}
+          />
+        </div>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

@@ -108,7 +108,7 @@ const FeatureImages = () => {
                     className="mt-2.5 w-fit gap-2" 
                     size="lg"
                     authenticatedHref="/dashboard"
-                    unauthenticatedHref="/auth/sign-up">
+                    unauthenticatedHref="/auth/login">
                     {tab.content.buttonText}
                   </AuthAwareButton>
                 </div>

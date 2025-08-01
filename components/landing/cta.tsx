@@ -8,7 +8,7 @@ const ctaData = {
     description: "Create an account and start building your next project in minutes.",
     action: {
         text: "Sign up for free",
-        href: "/sign-up"
+        href: "/auth/login"
     }
 };
 
@@ -95,7 +95,7 @@ export function BackgroundPaths() {
                                             stiffness: 150,
                                             damping: 25,
                                         }}
-                                        className="inline-block text-transparent bg-clip-text 
+                                        className="inline-block text-transparent bg-clip-text pb-4 
                                         bg-gradient-to-r from-black to-neutral-600 
                                         dark:from-white dark:to-neutral-400"
                                     >
@@ -119,7 +119,7 @@ export function BackgroundPaths() {
                             group-hover:-translate-y-0.5 border border-black/10 dark:border-white/10
                             hover:shadow-md dark:hover:shadow-neutral-800/50"
                             authenticatedHref="/dashboard"
-                            unauthenticatedHref="/auth/sign-up"
+                            unauthenticatedHref="/auth/login"
                         >
                             <span className="opacity-90 group-hover:opacity-100 transition-opacity">
                                 {ctaData.action.text}

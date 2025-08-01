@@ -2,8 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { ArrowRight, ChevronRight, Menu, X, FrameIcon } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { ArrowRight, ChevronRight, FrameIcon, Menu, X } from 'lucide-react'
 import { AnimatedGroup } from '@/components/landing/animated-group'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
@@ -99,38 +98,24 @@ export function HeroSection() {
                         
                                     <h1
                                         className="mt-8 max-w-4xl mx-auto text-balance text-6xl md:text-7xl lg:mt-16 xl:text-[5.25rem] font-bold tracking-tighter">
-                                        Modern Solutions for <AuroraText>Customer Engagement</AuroraText>
+                                        Free template <AuroraText>MVP Boilerplate</AuroraText>
                                     </h1>
                                     <p
                                         className="mx-auto mt-8 max-w-2xl text-balance text-lg">
-                                        Highly customizable components for building modern websites and applications that look and feel the way you mean it.
+                                        Shrek my buddy , agreed to be the face of the product.
                                     </p>
                                 </AnimatedGroup>
 
                                 <AnimatedGroup
                                     variants={transitionVariants as Variants}
                                     className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row">
-                                    <div
-                                        key={1}
-                                        className="bg-foreground/10 rounded-[14px] border p-0.5">
-                                        <AuthAwareButton
-                                            size="lg"
-                                            className="rounded-xl px-5 text-base"
-                                            authenticatedHref="/dashboard"
-                                            unauthenticatedHref="/auth/sign-up">
-                                            <span className="text-nowrap">Start Building</span>
-                                        </AuthAwareButton>
-                                    </div>
-                                    <Button
-                                        key={2}
-                                        asChild
-                                        size="lg"
-                                        variant="ghost"
-                                        className="h-10.5 rounded-xl px-5">
-                                        <Link href="/auth/login">
-                                            <span className="text-nowrap">Request a demo</span>
-                                        </Link>
-                                    </Button>
+                                    <AuthAwareButton
+                                        className="rounded-xl px-5 text-base"
+                                        authenticatedHref="/dashboard"
+                                        unauthenticatedHref="/auth/login"
+                                    >
+                                        <span className="text-nowrap">Start Building</span>
+                                    </AuthAwareButton>
                                 </AnimatedGroup>
                             </div>
                         </div>
@@ -145,15 +130,8 @@ export function HeroSection() {
                                 />
                                 <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-6xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
                                     <Image
-                                        className="bg-background aspect-15/8 relative hidden rounded-2xl dark:block"
-                                        src="/images/hero-section.png"
-                                        alt="app screen"
-                                        width="2700"
-                                        height="1440"
-                                    />
-                                    <Image
-                                        className="z-2 border-border/25 aspect-15/8 relative rounded-2xl border dark:hidden"
-                                        src="/images/hero-section.png"
+                                        className="bg-background aspect-15/8 relative rounded-2xl"
+                                        src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.pngplay.com%2Fwp-content%2Fuploads%2F12%2FShrek-PNG-HD-Quality.png&f=1&nofb=1&ipt=f743cf1cd00e3f8771cb79fca813046dc26faaf32b2d7060992b86987f14172c"
                                         alt="app screen"
                                         width="2700"
                                         height="1440"
@@ -178,8 +156,8 @@ export function HeroSection() {
                             <div className="flex">
                                 <Image
                                     className="mx-auto h-5 w-fit dark:invert"
-                                    src="/images/hero-section.png"
-                                    alt="Nvidia Logo"
+                                    src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%2Fid%2FOIP.RD25D2rT2JrBHqGX4-FioQHaEK%3Fpid%3DApi&f=1&ipt=a4c5ff53078c84f02fa016fce602ae504f3ec676504802df36c8d44361a60ad9&ipo=images"
+                                    alt="Shrek Logo"
                                     height="20"
                                     width={20}
                                 />
@@ -329,10 +307,9 @@ const HeroHeader = () => {
                             </div>
                             <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
                                 <AuthAwareButton
-                                    size="sm"
                                     className={cn("w-full", isScrolled ? 'lg:inline-flex' : 'hidden lg:inline-flex')}
                                     authenticatedHref="/dashboard"
-                                    unauthenticatedHref="/auth/sign-up"
+                                    unauthenticatedHref="/auth/login"
                                 >
                                     <span>Get Started</span>
                                 </AuthAwareButton>

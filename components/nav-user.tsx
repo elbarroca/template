@@ -4,9 +4,7 @@ import * as React from "react"
 import {
   ChevronsUpDown,
   Settings2,
-  Sparkles,
 } from "lucide-react"
-
 import {
   Avatar,
   AvatarFallback,
@@ -29,6 +27,7 @@ import {
 } from "@/components/ui/sidebar"
 import { LogoutButton } from "./logout-button"
 import Link from "next/link"
+import { Badge } from "./ui/badge"
 
 const emojis = [
   "😀", "😃", "😄", "😁", "😆", "😅", "😂", "🤣", "😊", "😇", "🙂", "🙃", "😉", "😌", "😍", "🥰", "😘", "😗", "😙", "😚", "😋", "😛", "😝", "😜", "🤪", "🤨", "🧐", "🤓", "😎", "🤩", "🥳", "😏", "😒", "😞", "😔", "😟", "😕", "🙁", "☹️", "😣", "😖", "😫", "😩", "🥺", "😢", "😭", "😤", "😠", "😡", "🤬", "🤯", "😳", "🥵", "🥶", "😱", "😨", "😰", "😥", "😓", "🤗", "🤔", "🤭", "🤫", "🤥", "😶", "😐", "😑", "😬", "🙄", "😯", "😦", "😧", "😮", "😲", "🥱", "😴", "🤤", "😪", "😵", "🤐", "🥴", "🤢", "🤮", "🤧", "😷", "🤒", "🤕", "🤑", "🤠", "😈", "👿", "👹", "👺", "🤡", "💩", "👻", "💀", "☠️", "👽", "👾", "🤖", "🎃", "😺", "😸", "😹", "😻", "😼", "😽", "🙀", "😿", "😾",
@@ -38,12 +37,14 @@ const getRandomEmoji = () => emojis[Math.floor(Math.random() * emojis.length)];
 
 export function NavUser({
   user,
+  isPremium,
 }: {
   user: {
     name: string
     email: string
     avatar: string
   }
+  isPremium: boolean
 }) {
   const { isMobile } = useSidebar()
   const [randomEmoji, setRandomEmoji] = React.useState("CN");
@@ -66,7 +67,10 @@ export function NavUser({
                 <AvatarFallback className="rounded-lg">{randomEmoji}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{user.name}</span>
+                <span className="truncate font-semibold flex items-center gap-2">
+                  {user.name}
+                  {isPremium && <Badge variant="premium">Premium</Badge>}
+                </span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
@@ -97,10 +101,6 @@ export function NavUser({
                   <Settings2 />
                   Settings
                 </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

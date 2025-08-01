@@ -16,7 +16,7 @@ interface AuthAwareButtonProps extends Omit<ButtonProps, 'asChild' | 'onClick'> 
 export function AuthAwareButton({ 
   children, 
   authenticatedHref = "/dashboard", 
-  unauthenticatedHref = "/auth/sign-up",
+  unauthenticatedHref = "/auth/login",
   className,
   ...props 
 }: AuthAwareButtonProps) {

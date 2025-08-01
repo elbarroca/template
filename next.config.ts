@@ -51,6 +51,30 @@ const nextConfig: NextConfig = {
       port: "",
       pathname: "/**",
     },
+    {
+      protocol: "https",
+      hostname: "www.pngplay.com",
+      port: "",
+      pathname: "/**",
+    },
+    {
+      protocol: "https",
+      hostname: "external-content.duckduckgo.com",
+      port: "",
+      pathname: "/**",
+    },
+    {
+      protocol: "https",
+      hostname: "api.dicebear.com",
+      port: "",
+      pathname: "/**",
+    },
+    {
+      protocol: "https",
+      hostname: "lh3.googleusercontent.com",
+      port: "",
+      pathname: "/**",
+    },
     ],
   },
 };
