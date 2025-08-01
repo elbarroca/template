@@ -4,16 +4,18 @@ import {
   SidebarInset,
 } from "@/components/ui/sidebar"
 import { SiteHeader } from "@/components/site-header";
+import { cookies } from "next/headers";
 
 export default async function Page() {
-  const supabase = await createClient();
+  const cookieStore = await cookies();
+  const supabase = await createClient(cookieStore);
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
   if (!user) {
-    // This should not happen if the page is protected by middleware
+    // This` should not happen if the page is protected by middleware
     return <div>User not found.</div>;
   }
 

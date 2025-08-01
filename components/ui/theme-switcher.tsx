@@ -10,9 +10,7 @@ import {
 import { Laptop, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
-import {
-  SidebarMenuButton,
-} from "@/components/ui/sidebar"
+import { Button } from "@/components/ui/button"
 
 const ThemeSwitcher = () => {
   const [mounted, setMounted] = useState(false)
@@ -31,20 +29,15 @@ const ThemeSwitcher = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <SidebarMenuButton className="w-full justify-start text-muted-foreground">
-          <span className="group-data-[collapsible=icon]:hidden">
-            {theme === "light" ? (
-              <Sun key="light" size={ICON_SIZE} />
-            ) : theme === "dark" ? (
-              <Moon key="dark" size={ICON_SIZE} />
-            ) : (
-              <Laptop key="system" size={ICON_SIZE} />
-            )}
-          </span>
-          <span className="group-data-[collapsible=icon]:hidden ml-2">
-            Toggle Theme
-          </span>
-        </SidebarMenuButton>
+        <Button variant="ghost" size="icon">
+          {theme === "light" ? (
+            <Sun key="light" size={ICON_SIZE} />
+          ) : theme === "dark" ? (
+            <Moon key="dark" size={ICON_SIZE} />
+          ) : (
+            <Laptop key="system" size={ICON_SIZE} />
+          )}
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-content" align="start">
         <DropdownMenuRadioGroup

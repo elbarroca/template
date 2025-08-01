@@ -1,6 +1,5 @@
 // app/page.tsx
 import { HeroSection } from "@/components/landing/hero-section";
-import { createClient } from "@/lib/supabase/server";
 import { GlowingEffectDemo } from "@/components/landing/grid";
 import { FeaturesSectionWithHoverEffects } from "@/components/landing/features";
 import Pricing from "@/components/landing/pricing";
@@ -11,11 +10,13 @@ import { FeatureImages } from "@/components/landing/feature-images";
 import { AnimatedSection } from "@/components/landing/animated-section";
 import { AuroraText } from "@/components/magicui/aurora-text";
 import { LineShadowText } from "@/components/magicui/line-shadow-text";
+import { createClient } from "@/lib/supabase/server";
 
 
 export default async function LandingPage() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const supabase = createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
   return (
     <main className="min-h-screen flex flex-col">
         <AnimatedSection>
@@ -40,7 +41,7 @@ export default async function LandingPage() {
           </div>
         </AnimatedSection>
         <AnimatedSection delay={0.5}>
-          <FeatureImages user={user} />
+          <FeatureImages />
         </AnimatedSection>
         <AnimatedSection delay={0.6}>
           <div className="container mx-auto px-4 md:px-8 text-center mt-16">
@@ -58,13 +59,13 @@ export default async function LandingPage() {
           </div>
         </AnimatedSection>
         <AnimatedSection delay={0.7}>
-          <Pricing user={user} />
+          <Pricing />
         </AnimatedSection>
         <AnimatedSection delay={0.8}>
           <Testimonials />
         </AnimatedSection>
         <AnimatedSection delay={0.9}>
-          <BackgroundPaths user={user} />
+          <BackgroundPaths />
         </AnimatedSection>
         <Footer />
     </main>

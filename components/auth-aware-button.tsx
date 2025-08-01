@@ -6,11 +6,12 @@ import { Button, ButtonProps } from "@/components/ui/button";
 import Link from "next/link";
 import { User } from "@supabase/supabase-js";
 
-interface AuthAwareButtonProps extends Omit<ButtonProps, 'asChild' | 'onClick'> {
+interface AuthAwareButtonProps extends Omit<ButtonProps, 'asChild'> {
   children: React.ReactNode;
   authenticatedHref?: string;
   unauthenticatedHref?: string;
   className?: string;
+  onClick?: () => void;
 }
 
 export function AuthAwareButton({ 
@@ -18,6 +19,7 @@ export function AuthAwareButton({
   authenticatedHref = "/dashboard", 
   unauthenticatedHref = "/auth/login",
   className,
+  onClick,
   ...props 
 }: AuthAwareButtonProps) {
   const [user, setUser] = useState<User | null>(null);
@@ -44,6 +46,14 @@ export function AuthAwareButton({
   if (loading) {
     return (
       <Button disabled className={className} {...props}>
+        {children}
+      </Button>
+    );
+  }
+
+  if (onClick) {
+    return (
+      <Button className={className} onClick={onClick} {...props}>
         {children}
       </Button>
     );

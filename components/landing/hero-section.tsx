@@ -6,11 +6,12 @@ import { ArrowRight, ChevronRight, FrameIcon, Menu, X } from 'lucide-react'
 import { AnimatedGroup } from '@/components/landing/animated-group'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
-import { Variants } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 import { AuroraText } from '../magicui/aurora-text';
 import { AnimatedGradientText } from '../magicui/animated-gradient-text';
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
 import { AuthAwareButton } from "@/components/auth-aware-button";
+import { User } from '@supabase/supabase-js'
 
 const transitionVariants = {
     item: {
@@ -27,15 +28,15 @@ const transitionVariants = {
                 type: 'spring',
                 bounce: 0.3,
                 duration: 1.5,
-            },
+            },  
         },
     },
 }
 
-export function HeroSection() {
-    return (
+export function HeroSection({ user }: { user: User | null }) {
+    return (    
         <>
-            <HeroHeader />
+            <HeroHeader user={user} />
             <main className="overflow-hidden">
                 <div
                     aria-hidden
@@ -78,8 +79,7 @@ export function HeroSection() {
                         <div className="mx-auto max-w-7xl px-6">
                             <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
                                 <AnimatedGroup variants={transitionVariants as Variants}>
-                                    <Link
-                                        href="/features"
+                                    <div
                                         className="hover:bg-background dark:hover:border-t-border bg-muted group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 shadow-md shadow-black/5 transition-all duration-300 dark:border-t-white/5 dark:shadow-zinc-950">
                                         <span className="text-foreground text-sm"><AnimatedGradientText>Introducing Support for AI Models</AnimatedGradientText></span>
                                         <span className="dark:border-background block h-4 w-0.5 border-l bg-white dark:bg-zinc-700"></span>
@@ -94,7 +94,7 @@ export function HeroSection() {
                                                 </span>
                                             </div>
                                         </div>
-                                    </Link>
+                                    </div>
                         
                                     <h1
                                         className="mt-8 max-w-4xl mx-auto text-balance text-6xl md:text-7xl lg:mt-16 xl:text-[5.25rem] font-bold tracking-tighter">
@@ -242,11 +242,11 @@ const menuItems = [
     { name: 'About', href: '/about' },
 ]
 
-const HeroHeader = () => {
+const HeroHeader = ({ user }: { user: User | null }) => {
     const [menuState, setMenuState] = React.useState(false)
     const [isScrolled, setIsScrolled] = React.useState(false)
 
-    React.useEffect(() => {
+    React.useEffect(() => { 
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 50)
         }
@@ -255,7 +255,10 @@ const HeroHeader = () => {
     }, [])
     return (
         <header>
-            <nav
+            <motion.nav
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
                 data-state={menuState && 'active'}
                 className="fixed z-20 w-full px-2 group">
                 <div className={cn('mx-auto mt-2 max-w-6xl px-6 transition-all duration-300 lg:px-12', isScrolled && 'bg-background/50 max-w-4xl rounded-2xl border backdrop-blur-lg lg:px-5')}>
@@ -278,22 +281,8 @@ const HeroHeader = () => {
                         </div>
 
                         <div className="absolute inset-0 m-auto hidden size-fit lg:block">
-                            <ul className="flex gap-8 text-sm">
-                                {menuItems.map((item, index) => (
-                                    <li key={index}>
-                                        <Link
-                                            href={item.href}
-                                            className="text-muted-foreground hover:text-accent-foreground block duration-150">
-                                            <span>{item.name}</span>
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        <div className="bg-background group-data-[state=active]:block lg:group-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
-                            <div className="lg:hidden">
-                                <ul className="space-y-6 text-base">
+                            <AnimatedGroup preset="slide">
+                                <ul className="flex gap-8 text-sm">
                                     {menuItems.map((item, index) => (
                                         <li key={index}>
                                             <Link
@@ -304,30 +293,64 @@ const HeroHeader = () => {
                                         </li>
                                     ))}
                                 </ul>
+                            </AnimatedGroup>
+                        </div>
+
+                        <div className="bg-background group-data-[state=active]:block lg:group-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
+                            <div className="lg:hidden">
+                                <AnimatedGroup preset="slide">
+                                    <ul className="space-y-6 text-base">
+                                        {menuItems.map((item, index) => (
+                                            <li key={index}>
+                                                <Link
+                                                    href={item.href}
+                                                    className="text-muted-foreground hover:text-accent-foreground block duration-150">
+                                                    <span>{item.name}</span>
+                                                </Link>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </AnimatedGroup>
                             </div>
                             <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                                <AuthAwareButton
-                                    className={cn("w-full", isScrolled ? 'lg:inline-flex' : 'hidden lg:inline-flex')}
-                                    authenticatedHref="/dashboard"
-                                    unauthenticatedHref="/auth/login"
-                                >
-                                    <span>Get Started</span>
-                                </AuthAwareButton>
-                                <ThemeSwitcher />
+                                <AnimatedGroup preset="slide">
+                                    <div className="flex items-center gap-2">
+                                        <ThemeSwitcher />
+                                        {user ? (
+                                            <AuthAwareButton
+                                            className={cn("w-full", isScrolled ? 'lg:inline-flex' : 'hidden lg:inline-flex')}
+                                            authenticatedHref="/dashboard"
+                                            unauthenticatedHref="/auth/login"
+                                            >
+                                                <span>Get Started</span>
+                                            </AuthAwareButton>
+                                        ) : (
+                                            <AuthAwareButton
+                                                className={cn("w-full", isScrolled ? 'lg:inline-flex' : 'hidden lg:inline-flex')}
+                                                authenticatedHref="/dashboard"
+                                                unauthenticatedHref="/auth/login"
+                                            >
+                                                <span>Get Started</span>
+                                            </AuthAwareButton>
+                                        )}
+                                    </div>
+                                </AnimatedGroup>
                             </div>
                         </div>
                     </div>
                 </div>
-            </nav>
+            </motion.nav>
         </header>
     )
 }
 
 const Logo = ({ className }: { className?: string }) => {
     return (
-        <div className={cn("flex items-center space-x-4", className)}>
-            <FrameIcon className="size-5 text-[#FF6B00]" />
-            <span className="text-black dark:text-white text-xl font-bold">MVP <AuroraText>Boilerplate</AuroraText></span>
-        </div>
+        <AnimatedGroup preset="slide">
+            <div className={cn("flex items-center space-x-4", className)}>
+                <FrameIcon className="size-5 text-[#FF6B00]" />
+                <span className="text-black dark:text-white text-xl font-bold">MVP <AuroraText>Boilerplate</AuroraText></span>
+            </div>
+        </AnimatedGroup>
     )
 }

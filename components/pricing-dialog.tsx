@@ -16,6 +16,18 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
+const handleCheckout = async (priceId: string) => {
+  const res = await fetch("/api/stripe", {
+    method: "POST",
+    body: JSON.stringify({ priceId }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const { url } = await res.json();
+  window.location.href = url;
+};
+
 type Plan = "monthly" | "annually"
 
 type PLAN = {
@@ -24,6 +36,10 @@ type PLAN = {
   desc: string
   monthlyPrice: number
   annuallyPrice: number
+  priceId: {
+    monthly: string
+    annually: string
+  }
   badge?: string
   buttonText: string
   features: string[]
@@ -34,8 +50,12 @@ export const PLANS: PLAN[] = [
     id: "standard",
     title: "Starter",
     desc: "Ideal for developers and indie hackers building with Ruixen UI for personal or small commercial projects.",
-    monthlyPrice: 29,
-    annuallyPrice: 306,
+    monthlyPrice: 8,
+    annuallyPrice: 80,
+    priceId: {
+      monthly: "price_1J...", // Replace with your actual monthly price ID
+      annually: "price_1J...", // Replace with your actual yearly price ID
+    },
     buttonText: "Get Starter Access",
     features: [
       "Access to 50+ UI components",
@@ -52,8 +72,12 @@ export const PLANS: PLAN[] = [
     id: "mastermind",
     title: "Pro",
     desc: "Designed for teams and startups who need advanced UI components, theme customization, and premium support.",
-    monthlyPrice: 79,
-    annuallyPrice: 834,
+    monthlyPrice: 80,
+    annuallyPrice: 180,
+    priceId: {
+      monthly: "price_1J...", // Replace with your actual monthly price ID
+      annually: "price_1J...", // Replace with your actual yearly price ID
+    },
     badge: "Best Value",
     buttonText: "Upgrade to Pro",
     features: [
@@ -138,7 +162,7 @@ const Plan = ({ plan, billPlan }: { plan: PLAN; billPlan: Plan }) => {
             }
             suffix={billPlan === "monthly" ? "/mo" : "/yr"}
             format={{
-              currency: "USD",
+              currency: "EUR",
               style: "currency",
               currencySign: "standard",
               minimumFractionDigits: 0,
@@ -157,6 +181,7 @@ const Plan = ({ plan, billPlan }: { plan: PLAN; billPlan: Plan }) => {
           className="w-full"
           authenticatedHref="/dashboard"
           unauthenticatedHref="/auth/login"
+          onClick={() => handleCheckout(plan.priceId[billPlan])}
         >
           {plan.buttonText}
         </AuthAwareButton>

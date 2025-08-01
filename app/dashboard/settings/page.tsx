@@ -6,10 +6,8 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
-import data from "../data.json"
 
 export default function Page() {
-  const user = data[0] // Using the first user for mock purposes
 
   return (
     <SidebarInset>
@@ -26,7 +24,7 @@ export default function Page() {
             <CardTitle>Your Plan</CardTitle>
           </CardHeader>
           <CardContent>
-            <p>You are currently on the <span className="font-semibold">{user.plan}</span> plan.</p>
+            <p>You are currently on the <span className="font-semibold">Free</span> plan.</p>
           </CardContent>
         </Card>
         <Card>
