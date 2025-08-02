@@ -1,6 +1,6 @@
-import Stripe from 'stripe'
+import Stripe from 'stripe';
 
-export const stripe = new Stripe("sk_test_51RpRIZ2NcI8pjgHsHY767zphkphCsNR9mLVuZuXh3C3IN0Em2PYbwTUJqLGCTcGtoznAVxRXuky9PlX42D7lJmRG00qsnDseA3", {
-  apiVersion: '2025-07-30.basil',
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2023-10-16',
   typescript: true,
-})
+});
