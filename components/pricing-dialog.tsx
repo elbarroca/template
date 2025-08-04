@@ -47,16 +47,16 @@ type PLAN = {
 }
 export const PLANS: PLAN[] = [
   {
-    id: "standard",
-    title: "Starter",
+    id: "pro",
+    title: "Pro",
     desc: "Ideal for developers and indie hackers building with Ruixen UI for personal or small commercial projects.",
     monthlyPrice: 8,
     annuallyPrice: 80,
     priceId: {
-      monthly: "price_1RrLW82NcI8pjgHsrm9HZN2B", // Replace with your actual monthly price ID
-      annually: "price_1RrLWX2NcI8pjgHsoooCY170", // Replace with your actual yearly price ID
+      monthly: process.env.NEXT_PUBLIC_STRIPE_PRO_MONTHLY_PRICE_ID!,
+      annually: process.env.NEXT_PUBLIC_STRIPE_PRO_ANNUAL_PRICE_ID!,
     },
-    buttonText: "Get Starter Access",
+    buttonText: "Get Pro Access",
     features: [
       "Access to 50+ UI components",
       "Tailwind-compatible styling",
@@ -69,17 +69,17 @@ export const PLANS: PLAN[] = [
     link: "#",
   },
   {
-    id: "mastermind",
-    title: "Pro",
+    id: "premium",
+    title: "Premium",
     desc: "Designed for teams and startups who need advanced UI components, theme customization, and premium support.",
     monthlyPrice: 80,
-    annuallyPrice: 180,
+    annuallyPrice: 180, // Assuming 180 for annual premium, adjust as needed
     priceId: {
-      monthly: "price_1RrLWk2NcI8pjgHsWQT5HRls", // Replace with your actual monthly price ID
-      annually: "price_1RrLXU2NcI8pjgHsEUCZMnao", // Replace with your actual yearly price ID
+      monthly: process.env.NEXT_PUBLIC_STRIPE_PREMIUM_MONTHLY_PRICE_ID!,
+      annually: process.env.NEXT_PUBLIC_STRIPE_PREMIUM_ANNUAL_PRICE_ID!,
     },
     badge: "Best Value",
-    buttonText: "Upgrade to Pro",
+    buttonText: "Upgrade to Premium",
     features: [
       "Access to 100+ production-grade components",
       "Advanced theming & dark mode",
@@ -93,7 +93,7 @@ export const PLANS: PLAN[] = [
   },
 ]
 
-export function PricingDialog({ children }: { children: React.ReactNode }) {
+export function PricingDialog({ children, userRole }: { children: React.ReactNode, userRole: string | null }) {
   const [billPlan, setBillPlan] = useState<Plan>("monthly")
 
   const handleSwitch = () => {
@@ -131,7 +131,7 @@ export function PricingDialog({ children }: { children: React.ReactNode }) {
         </div>
         <div className="grid w-full grid-cols-1 lg:grid-cols-2 pt-8 lg:pt-12 gap-4 lg:gap-6">
           {PLANS.map((plan) => (
-            <Plan key={plan.id} plan={plan} billPlan={billPlan} />
+            <Plan key={plan.id} plan={plan} billPlan={billPlan} userRole={userRole} />
           ))}
         </div>
       </DialogContent>
@@ -139,7 +139,30 @@ export function PricingDialog({ children }: { children: React.ReactNode }) {
   )
 }
 
-const Plan = ({ plan, billPlan }: { plan: PLAN; billPlan: Plan }) => {
+const Plan = ({ plan, billPlan, userRole }: { plan: PLAN; billPlan: Plan; userRole: string | null }) => {
+  const isCurrentPlan = userRole?.toLowerCase() === plan.id.toLowerCase();
+  const isPro = plan.id === "pro";
+  const isPremium = plan.id === "premium";
+
+  let buttonText = plan.buttonText;
+  let isDisabled = false;
+
+  if (isCurrentPlan) {
+    buttonText = "Current Plan";
+    isDisabled = true;
+  } else if (userRole === "Pro" && isPremium) {
+    buttonText = "Upgrade to Premium";
+  } else if (userRole === "Premium" && isPro) {
+    buttonText = "Downgrade to Pro";
+  } else if (userRole === "Premium" && isPremium) {
+    buttonText = "Current Plan";
+    isDisabled = true;
+  } else if (userRole === "Free" && isPro) {
+    buttonText = "Get Pro Access";
+  } else if (userRole === "Free" && isPremium) {
+    buttonText = "Upgrade to Premium";
+  }
+
   return (
     <div
       className={cn(
@@ -182,8 +205,9 @@ const Plan = ({ plan, billPlan }: { plan: PLAN; billPlan: Plan }) => {
           authenticatedHref="/dashboard"
           unauthenticatedHref="/auth/login"
           onClick={() => handleCheckout(plan.priceId[billPlan])}
+          disabled={isDisabled}
         >
-          {plan.buttonText}
+          {buttonText}
         </AuthAwareButton>
         <div className="h-8 overflow-hidden w-full mx-auto">
           <AnimatePresence mode="wait">

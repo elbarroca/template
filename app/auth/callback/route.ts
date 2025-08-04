@@ -13,27 +13,17 @@ export async function GET(request: Request) {
 
     if (!error && session) {
       const { user } = session;
-      // Fetch existing profile
-      const { data: existingProfile } = await supabase
+      const { data: profile } = await supabase
         .from("profiles")
         .select("stripe_customer_id")
         .eq("id", user.id)
         .single();
 
-      let customerId = existingProfile?.stripe_customer_id;
-
-      // If no profile exists, create one
-      if (!existingProfile) {
-        await supabase.from("profiles").insert({ id: user.id, email: user.email });
-      }
-
-      // If no stripe_customer_id exists for the profile, create one
-      if (!customerId) {
+      if (!profile?.stripe_customer_id) {
         const customer = await stripe.customers.create({
           email: user.email,
-          name: user.user_metadata.full_name || user.email, // Fallback to email if full_name is null
+          name: user.user_metadata.full_name,
         });
-        customerId = customer.id;
 
         await supabase
           .from("profiles")

@@ -37,8 +37,11 @@ export async function POST(req: Request) {
     ],
     mode: 'subscription',
     customer: profile.stripe_customer_id,
+    metadata: {
+      userId: user.id, // Pass the user ID here
+    },
     success_url: absoluteUrl('/dashboard'),
-    cancel_url: absoluteUrl('/'),
+    cancel_url: absoluteUrl('/dashboard'),
   })
 
   return new NextResponse(JSON.stringify({ url: session.url }))

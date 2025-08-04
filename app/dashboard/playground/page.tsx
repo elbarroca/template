@@ -17,12 +17,26 @@ export default async function Page() {
     return <div>User not found.</div>;
   }
 
+  // Fetch user profile to get the role
+  const { data: profileData, error: profileError } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+
+  if (profileError) {
+    console.error("Error fetching user profile for playground:", profileError);
+    // Handle error gracefully, perhaps default to 'Free'
+  }
+
+  const userRole = profileData?.role || 'Free'; // Default to 'Free' if not found or error
+
   const userData = [
     {
       id: user.id,
       name: user.user_metadata.full_name || 'N/A',
       email: user.email || 'N/A',
-      plan: user.user_metadata.plan || 'Free',
+      plan: userRole, // Use the fetched role
       status: user.email_confirmed_at ? 'Active' : 'Pending',
       lastLogin: user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleDateString() : 'N/A',
       avatar: user.user_metadata.avatar_url || `https://api.dicebear.com/8.x/lorelei/svg?seed=${user.id}`

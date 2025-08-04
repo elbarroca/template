@@ -63,3 +63,38 @@ const ThemeSwitcher = () => {
 }
 
 export { ThemeSwitcher }
+
+export const ThemeToggleGroup = () => {
+  const [mounted, setMounted] = useState(false)
+  const { theme, setTheme } = useTheme()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return null
+  }
+
+  const ICON_SIZE = 16
+
+  return (
+    <DropdownMenuRadioGroup
+      value={theme}
+      onValueChange={(e) => setTheme(e)}
+    >
+      <DropdownMenuRadioItem className="flex gap-2" value="light">
+        <Sun size={ICON_SIZE} className="text-muted-foreground" />{" "}
+        <span>Light</span>
+      </DropdownMenuRadioItem>
+      <DropdownMenuRadioItem className="flex gap-2" value="dark">
+        <Moon size={ICON_SIZE} className="text-muted-foreground" />{" "}
+        <span>Dark</span>
+      </DropdownMenuRadioItem>
+      <DropdownMenuRadioItem className="flex gap-2" value="system">
+        <Laptop size={ICON_SIZE} className="text-muted-foreground" />{" "}
+        <span>System</span>
+      </DropdownMenuRadioItem>
+    </DropdownMenuRadioGroup>
+  )
+}

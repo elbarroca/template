@@ -2,7 +2,7 @@
 import React from 'react';
 import type { ComponentProps, ReactNode } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { FacebookIcon, FrameIcon, InstagramIcon, LinkedinIcon, YoutubeIcon } from 'lucide-react';
+import { FrameIcon, InstagramIcon, LinkedinIcon, DollarSign , Github , Calendar } from 'lucide-react';
 
 interface FooterLink {
 	title: string;
@@ -11,7 +11,7 @@ interface FooterLink {
 }
 
 interface FooterSection {
-	label: string;
+	label: string;	
 	links: FooterLink[];
 }
 
@@ -34,10 +34,16 @@ const footerLinks: FooterSection[] = [
 	{
 		label: 'Social Links',
 		links: [
-			{ title: 'Facebook', href: '#', icon: FacebookIcon },
-			{ title: 'Instagram', href: '#', icon: InstagramIcon },
-			{ title: 'Youtube', href: '#', icon: YoutubeIcon },
-			{ title: 'LinkedIn', href: '#', icon: LinkedinIcon },
+			{ title: 'Telegram', href: 'https://t.me/ricardoroca1', icon: DollarSign },
+			{ title: 'LinkedIn', href: 'https://www.linkedin.com/in/ricardobarroca/', icon: LinkedinIcon },
+			{ title: 'Instagram', href: 'https://www.instagram.com/rbarrocaa?igsh=Y2I0MDh3eW5ma3N5&utm_source=qr', icon: InstagramIcon },
+		],
+	},
+	{
+		label: 'Resources',
+		links: [
+			{ title: 'Template Repo', href: 'https://github.com/elbarroca/template', icon: Github },
+			{ title: 'Book a call with me', href: 'https://cal.com/barroca/30min', icon: Calendar },
 		],
 	},
 ];

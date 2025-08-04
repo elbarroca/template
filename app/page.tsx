@@ -18,7 +18,7 @@ export default async function LandingPage() {
   const { data: { user } } = await supabase.auth.getUser()
 
   return (
-    <main className="min-h-screen flex flex-col">
+    <main className="min-h-screen flex flex-col mx-auto max-w-7xl">
         <AnimatedSection>
           <HeroSection user={user} />
         </AnimatedSection>        

@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function absoluteUrl(path: string) {
-  return `${process.env.NEXT_PUBLIC_APP_URL}${path}`;
+  return `${process.env.NEXT_PUBLIC_BASE_URL}${path}`;
 }
 
 // This check can be removed, it is just for tutorial purposes

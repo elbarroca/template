@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/sidebar"
 import { User } from "@supabase/supabase-js"
 import { PricingDialog } from "./pricing-dialog"
-import { ThemeSwitcher } from "./ui/theme-switcher"
+import { createClient } from "@/lib/supabase/client"
 
 const data = {
   navMain: [
@@ -76,6 +76,28 @@ export function AppSidebar({
   isPremium,
   ...props
 }: React.ComponentProps<typeof Sidebar> & { user: User | null; isPremium: boolean }) {
+  const [userRole, setUserRole] = React.useState<string | null>(null)
+  const supabase = createClient()
+
+  React.useEffect(() => {
+    const fetchUserRole = async () => {
+      if (user?.id) {
+        const { data, error } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .single()
+
+        if (error) {
+          console.error("Error fetching user role:", error)
+        } else if (data) {
+          setUserRole(data.role)
+        }
+      }
+    }
+
+    fetchUserRole()
+  }, [user?.id, supabase])
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -94,22 +116,48 @@ export function AppSidebar({
       </SidebarContent>
       <SidebarFooter>
         <div className="flex flex-col gap-2">
-          {!isPremium && (
-            <PricingDialog>
-              <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              {userRole === "Free" ? (
+                <PricingDialog userRole={userRole}>
+                  <SidebarMenuButton className="flex justify-start items-center">
                     <Sparkles className="size-4" />
-                    <span className="group-data-[collapsible=icon]:hidden">
-                      Upgrade to Pro
+                    <span className="flex-1 text-left group-data-[collapsible=icon]:hidden">
+                      Role: <span style={{ color: 'gray' }}>{userRole.charAt(0).toUpperCase() + userRole.slice(1)}</span>
                     </span>
+                    <span className="text-xs ml-1">Upgrade to Pro</span>
                   </SidebarMenuButton>
-                </SidebarMenuItem>
-              </SidebarMenu>
-            </PricingDialog>
-          )}
+                </PricingDialog>
+              ) : userRole === "Pro" ? (
+                <PricingDialog userRole={userRole}>
+                  <SidebarMenuButton className="flex justify-start items-center">
+                    <Sparkles className="size-4" />
+                    <span className="flex-1 text-left group-data-[collapsible=icon]:hidden">
+                      Role: <span style={{ color: 'orange' }}>{userRole.charAt(0).toUpperCase() + userRole.slice(1)}</span>
+                    </span>
+                    <span className="text-xs ml-1">Upgrade to Premium</span>
+                  </SidebarMenuButton>
+                </PricingDialog>
+              ) : userRole === "Premium" ? (
+                <SidebarMenuButton className="flex justify-start items-center">
+                  <Sparkles className="size-4" />
+                  <span className="flex-1 text-left group-data-[collapsible=icon]:hidden">
+                    Role: <span style={{ color: 'gold' }}>{userRole.charAt(0).toUpperCase() + userRole.slice(1)}</span>
+                  </span>
+                </SidebarMenuButton>
+              ) : (
+                <SidebarMenuButton className="flex justify-start items-center">
+                  <Sparkles className="size-4" />
+                  <span className="flex-1 text-left group-data-[collapsible=icon]:hidden">
+                    Role: Loading...
+                  </span>
+                </SidebarMenuButton>
+              )}
+            </SidebarMenuItem>
+          </SidebarMenu>
+
           <div className="border rounded-lg">
-            <ThemeSwitcher />
+            
           </div>
           <NavUser
             user={{
