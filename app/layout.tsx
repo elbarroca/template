@@ -1,8 +1,9 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
-import { WebVitalsScripts } from "@/components/web-vitals-scripts";
-import { Providers } from "@/components/providers";
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { WebVitalsScripts } from "@/components/landing/data/web-vitals-scripts";
+import { Providers } from "@/components/landing/data/providers";
 import type { Metadata } from 'next'
 
 const inter = Inter({ subsets: ["latin"] });
@@ -26,6 +27,7 @@ export default function RootLayout({
           {children}
           <WebVitalsScripts />
         </Providers>
+        <SpeedInsights />
         <Analytics />
       </body>
     </html>

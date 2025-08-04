@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { FrameIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { AuroraText } from './magicui/aurora-text';
+import { AuroraText } from '../magicui/aurora-text';
 
 export const Logo = ({ className }: { className?: string }) => {
     return (

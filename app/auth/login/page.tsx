@@ -1,6 +1,6 @@
 "use client";
 import { LoginForm } from "@/components/auth/login-form";
-import { Logo } from "@/components/logo";
+import { Logo } from "@/components/landing/logo";
 
 export default function Page() {
   return (

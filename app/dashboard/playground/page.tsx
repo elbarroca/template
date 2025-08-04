@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import {
   SidebarInset,
 } from "@/components/ui/sidebar"
-import { SiteHeader } from "@/components/site-header";
+import { SiteHeader } from "@/components/dashboard/site-header";
 
 export default async function Page() {
   const supabase = await createClient();

@@ -5,8 +5,8 @@ import NumberFlow from "@number-flow/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { CheckIcon } from "lucide-react"
 import { useState } from "react"
-import { AuroraText } from "./magicui/aurora-text"
-import { AuthAwareButton } from "@/components/auth-aware-button"
+import { AuroraText } from "../magicui/aurora-text"
+import { AuthAwareButton } from "@/components/dashboard/auth-aware-button"
 import {
   Dialog,
   DialogContent,

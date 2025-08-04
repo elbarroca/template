@@ -8,7 +8,7 @@ import {
 import { AuroraText } from "../magicui/aurora-text";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { AuthAwareButton } from "@/components/auth-aware-button";
+import { AuthAwareButton } from "@/components/dashboard/auth-aware-button";
 
 const features = [
   {

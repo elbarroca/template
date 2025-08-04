@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { AuthAwareButton } from "@/components/auth-aware-button";
+import { AuthAwareButton } from "@/components/dashboard/auth-aware-button";
 
 const ctaData = {
     title: "Ready to get started?",

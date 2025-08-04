@@ -1,7 +1,7 @@
 "use client";
 
 import { ForgotPasswordForm } from "@/components/auth/forgot-password-form";
-import { Logo } from "@/components/logo";
+import { Logo } from "@/components/landing/logo";
 
 export default function Page() {
   return (

@@ -10,7 +10,7 @@ import { motion, Variants } from 'framer-motion'
 import { AuroraText } from '../magicui/aurora-text';
 import { AnimatedGradientText } from '../magicui/animated-gradient-text';
 import { ThemeSwitcher } from "@/components/ui/theme-switcher";
-import { AuthAwareButton } from "@/components/auth-aware-button";
+import { AuthAwareButton } from "@/components/dashboard/auth-aware-button";
 import { User } from '@supabase/supabase-js'
 
 const transitionVariants = {

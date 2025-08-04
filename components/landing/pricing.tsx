@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { CheckIcon } from "lucide-react";
 import { useState } from "react";
 import { AuroraText } from "../magicui/aurora-text";
-import { AuthAwareButton } from "@/components/auth-aware-button";
+import { AuthAwareButton } from "@/components/dashboard/auth-aware-button";
 
 type Plan = "monthly" | "annually";
 

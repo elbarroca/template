@@ -1,6 +1,6 @@
 "use client";
 import { UpdatePasswordForm } from "@/components/auth/update-password-form";
-import { Logo } from "@/components/logo";
+import { Logo } from "@/components/landing/logo";
 
 export default function Page() {
   return (
