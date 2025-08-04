@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import { WebVitalsScripts } from "@/components/web-vitals-scripts";
 import { Providers } from "@/components/providers";
 import type { Metadata } from 'next'
@@ -25,6 +26,7 @@ export default function RootLayout({
           {children}
           <WebVitalsScripts />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
