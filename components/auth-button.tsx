@@ -2,11 +2,9 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { createClient } from "@/lib/supabase/server";
 import { LogoutButton } from "./logout-button";
-import { cookies } from "next/headers";
 
 export async function AuthButton() {
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+  const supabase = await createClient();
 
   // You can also use getUser() which will be slower.
   const { data } = await supabase.auth.getClaims();

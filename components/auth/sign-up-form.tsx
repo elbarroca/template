@@ -48,6 +48,9 @@ export function SignUpForm({
         },
       });
       if (error) throw error;
+      if (typeof window !== 'undefined' && window.umami) {
+        window.umami.trackEvent('sign_up_completed');
+      }
       router.push("/auth/sign-up-success");
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");

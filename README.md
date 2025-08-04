@@ -103,3 +103,156 @@ Please file feedback and issues over on the [Supabase GitHub org](https://github
 - [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
 - [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
 - [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+
+# 📈 MVP SaaS Template — Free Self‑Hosted Metrics, Performance, SEO
+
+A clean, minimal setup using all‑free, open‑source tools:
+
+## 🎯 Objectives
+
+- Track real user actions: page views, sign‑ups, log‑ins, key conversions.  
+- Measure speed (Core Web Vitals) and monitor performance regressions.  
+- Structured SEO metadata for indexing & sharing than can scale.
+
+## 🧰 Tools You’ll Self‑Host
+
+- **Umami Analytics** (MIT license) via Docker Compose – unlimited usage, privacy‑focused, lightweight JS.  
+- **web‑vitals** to capture LCP, FID, CLS, INP.  
+- **Lighthouse** (or PageSpeed Insights) for speed audits.  
+- **next‑seo** (or `react‑helmet`) for metadata management.  
+- **(Optional) GTM snippet** to handle all other scripts.
+
+---
+
+## 🚀 Setup Instructions
+
+### 1. Self‑Host Umami
+
+```bash
+mkdir umami && cd umami
+# Copy this docker-compose.yml:
+cat > docker-compose.yml <<'EOF'
+services:
+  umami:
+    image: ghcr.io/umami-software/umami:postgresql-latest
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://umami:umami@umami-db:5432/umami
+      DATABASE_TYPE: postgresql
+      APP_SECRET: your_generated_secret # <<< CHANGE THIS
+  umami-db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: umami
+      POSTGRES_USER: umami
+      POSTGRES_PASSWORD: strong-password # <<< CHANGE THIS TO A STRONG PASSWORD
+    volumes:
+      - ./umami-data:/var/lib/postgresql/data
+EOF
+docker-compose up -d
+Open http://localhost:3000, log in as admin / umami, change password, add your domain.
+```
+
+### 2. Add Tracking JS to frontend
+
+In your `app/layout.tsx`:
+
+```html
+<script defer data-website-id="YOUR_WEBSITE_ID" src="https://your-domain.com/umami.js"></script>
+```
+Remember to replace `"YOUR_WEBSITE_ID"` with the actual website ID you get from your Umami dashboard and `"https://your-domain.com"` with the URL where you've self-hosted Umami.
+
+### 3. Track Custom Events
+
+Inside your front-end auth hooks (e.g., `components/auth/sign-up-form.tsx`, `components/auth/login-form.tsx`):
+
+```javascript
+if (typeof window !== 'undefined' && window.umami) {
+  window.umami.trackEvent('sign_up_completed'); // or 'login_success', etc.
+}
+```
+
+### 4. Capture Web Vitals & Forward
+
+The logic for capturing Core Web Vitals and forwarding them to Umami is encapsulated in `components/umami-tracker.tsx` and `lib/web-vitals.ts`. Ensure `components/umami-tracker.tsx` is imported and used in `app/layout.tsx`.
+
+### 5. Speed Audits via Lighthouse
+
+```bash
+npm install -g lighthouse
+lighthouse https://your-app.com --output html --output-path report.html
+```
+Add this to your CI pipeline for regression checks.
+
+### 6. SEO Meta Tags
+
+Install `next-seo`:
+
+```bash
+npm install next-seo
+```
+
+Configure `DefaultSeo` in `app/layout.tsx`:
+
+```tsx
+import { DefaultSeo } from 'next-seo';
+
+// ... inside your RootLayout component
+<DefaultSeo
+  title="My SaaS MVP"
+  description="Clean SaaS starter with free analytics & performance"
+  openGraph={{
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://your-app.com', // <<< REPLACE WITH YOUR APP URL
+    site_name: 'My SaaS MVP',
+  }}
+/>
+```
+
+### 7. Optional: Google Tag Manager (GTM)
+
+Place the GTM snippet in `app/layout.tsx` within the `<head>` and immediately after the `<body>` tag, using the `next/script` component:
+
+```tsx
+import Script from 'next/script';
+
+// ... inside your RootLayout component, within the <head>
+<Script id="gtm-script" strategy="afterInteractive">
+  {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');`} {/* <<< REPLACE WITH YOUR GTM ID */}
+</Script>
+
+// ... inside your RootLayout component, immediately after the <body> tag
+<noscript>
+  <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX" {/* <<< REPLACE WITH YOUR GTM ID */}
+    height="0" width="0" style={{ display: 'none', visibility: 'hidden' }}></iframe>
+</noscript>
+```
+**Important:** If you use GTM for Umami, you would configure Umami as a custom HTML tag within GTM, rather than directly placing the Umami script in your `app/layout.tsx`.
+
+---
+
+## ✅ What You’ll Get
+Full control and ownership of your tracking data—hosted on your server.
+
+Event-level insight on user flows (sign‑ups, log‑ins, conversions, page visits).
+
+Core Web Vitals metrics to monitor user-perceived performance.
+
+SEO-ready meta tags and share previews.
+
+No recurring cost ever—just your server and bandwidth.
+
+⚙️ Optional Enhancements
+Funnels & Cohorts: Umami has basic funnels. For advanced segmentation, pair with BI tools (e.g. Metabase‑based) or export CSV.
+
+Ackee: even lighter than Umami if you only need basic events/pageviews.
+
+Matomo: full analytics feature set, though heavier to maintain.
+
+Start with Umami—it’s simple, free forever, and more than enough for MVP tracking needs.

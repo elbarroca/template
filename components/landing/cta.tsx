@@ -7,7 +7,7 @@ const ctaData = {
     title: "Ready to get started?",
     description: "Create an account and start building your next project in minutes.",
     action: {
-        text: "Sign up for free",
+        text: "Get Started for free",
         href: "/auth/login"
     }
 };

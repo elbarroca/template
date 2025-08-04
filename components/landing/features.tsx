@@ -15,46 +15,46 @@ export function FeaturesSectionWithHoverEffects() {
     {
       title: "Built for developers",
       description:
-        "Built for engineers, developers, dreamers, thinkers and doers.",
+        "This template is built for developers, with a focus on ease of use and customization.",
       icon: <IconTerminal2 />,
     },
     {
       title: "Ease of use",
       description:
-        "It's as easy as using an Apple, and as expensive as buying one.",
+        "The template is designed to be easy to use, with a simple and intuitive interface.",
       icon: <IconEaseInOut />,
     },
     {
       title: "Pricing like no other",
       description:
-        "Our prices are best in the market. No cap, no lock, no credit card required.",
+        "Our pricing is competitive and flexible, with plans for all business sizes.",
       icon: <IconCurrencyDollar />,
     },
     {
       title: "100% Uptime guarantee",
-      description: "We just cannot be taken down by anyone.",
+      description: "We guarantee 100% uptime for your applications.",
       icon: <IconCloud />,
     },
     {
       title: "Multi-tenant Architecture",
-      description: "You can simply share passwords instead of buying new seats",
+      description: "Our template supports multi-tenant architecture, allowing you to serve multiple customers with a single instance.",
       icon: <IconRouteAltLeft />,
     },
     {
       title: "24/7 Customer Support",
       description:
-        "We are available a 100% of the time. Atleast our AI Agents are.",
+        "We offer 24/7 customer support to help you with any issues you may have.",
       icon: <IconHelp />,
     },
     {
       title: "Money back guarantee",
       description:
-        "If you donot like EveryAI, we will convince you to like us.",
+        "We offer a money-back guarantee if you are not satisfied with our product.",
       icon: <IconAdjustmentsBolt />,
     },
     {
       title: "And everything else",
-      description: "I just ran out of copy ideas. Accept my sincere apologies",
+      description: "This template includes everything you need to get started with your SaaS application.",
       icon: <IconHeart />,
     },
   ];

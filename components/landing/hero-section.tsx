@@ -81,7 +81,7 @@ export function HeroSection({ user }: { user: User | null }) {
                                 <AnimatedGroup variants={transitionVariants as Variants}>
                                     <div
                                         className="hover:bg-background dark:hover:border-t-border bg-muted group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 shadow-md shadow-black/5 transition-all duration-300 dark:border-t-white/5 dark:shadow-zinc-950">
-                                        <span className="text-foreground text-sm"><AnimatedGradientText>Introducing Support for AI Models</AnimatedGradientText></span>
+                                        <span className="text-foreground text-sm"><AnimatedGradientText>The perfect starting point for your next project</AnimatedGradientText></span>
                                         <span className="dark:border-background block h-4 w-0.5 border-l bg-white dark:bg-zinc-700"></span>
 
                                         <div className="bg-background group-hover:bg-muted size-6 overflow-hidden rounded-full duration-500">
@@ -98,11 +98,11 @@ export function HeroSection({ user }: { user: User | null }) {
                         
                                     <h1
                                         className="mt-8 max-w-4xl mx-auto text-balance text-6xl md:text-7xl lg:mt-16 xl:text-[5.25rem] font-bold tracking-tighter">
-                                        Free template <AuroraText>MVP Boilerplate</AuroraText>
+                                        Free template <AuroraText>SaaS Boilerplate</AuroraText>
                                     </h1>
                                     <p
                                         className="mx-auto mt-8 max-w-2xl text-balance text-lg">
-                                        Shrek my buddy , agreed to be the face of the product.
+                                        This template is the perfect starting point for your next project.
                                     </p>
                                 </AnimatedGroup>
 

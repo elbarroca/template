@@ -53,8 +53,8 @@ export const PLANS: PLAN[] = [
     monthlyPrice: 8,
     annuallyPrice: 80,
     priceId: {
-      monthly: "price_1J...", // Replace with your actual monthly price ID
-      annually: "price_1J...", // Replace with your actual yearly price ID
+      monthly: "price_1RrLW82NcI8pjgHsrm9HZN2B", // Replace with your actual monthly price ID
+      annually: "price_1RrLWX2NcI8pjgHsoooCY170", // Replace with your actual yearly price ID
     },
     buttonText: "Get Starter Access",
     features: [
@@ -75,8 +75,8 @@ export const PLANS: PLAN[] = [
     monthlyPrice: 80,
     annuallyPrice: 180,
     priceId: {
-      monthly: "price_1J...", // Replace with your actual monthly price ID
-      annually: "price_1J...", // Replace with your actual yearly price ID
+      monthly: "price_1RrLWk2NcI8pjgHsWQT5HRls", // Replace with your actual monthly price ID
+      annually: "price_1RrLXU2NcI8pjgHsEUCZMnao", // Replace with your actual yearly price ID
     },
     badge: "Best Value",
     buttonText: "Upgrade to Pro",

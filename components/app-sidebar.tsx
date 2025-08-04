@@ -73,9 +73,9 @@ const data = {
 
 export function AppSidebar({
   user,
+  isPremium,
   ...props
-}: React.ComponentProps<typeof Sidebar> & { user: User | null }) {
-  const isPremium = false // Placeholder until the data structure is fixed
+}: React.ComponentProps<typeof Sidebar> & { user: User | null; isPremium: boolean }) {
 
   return (
     <Sidebar collapsible="icon" {...props}>

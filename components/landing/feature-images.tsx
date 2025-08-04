@@ -17,7 +17,7 @@ const features = [
     label: "Built for developers",
     content: {
       badge: "Modern Tactics",
-      title: "Make your site a true standout.",
+      title: "Make your SaaS a true standout.",
       description:
         "Discover new web trends that help you craft sleek, highly functional sites that drive traffic and convert leads into customers.",
       buttonText: "See Plans",
@@ -32,7 +32,7 @@ const features = [
     label: "Ease of use",
     content: {
       badge: "Expert Features",
-      title: "Boost your site with top-tier design.",
+      title: "Boost your SaaS with top-tier design.",
       description:
         "Use stellar design to easily engage users and strengthen their loyalty. Create a seamless experience that keeps them coming back for more.",
       buttonText: "See Tools",

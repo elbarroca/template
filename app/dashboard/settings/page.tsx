@@ -6,8 +6,23 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
+import { createClient } from "@/lib/supabase/server"
 
-export default function Page() {
+export default async function Page() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    return null;
+  }
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', user.id)
+    .single()
+
+  const isPremium = profile?.role === 'pro'
 
   return (
     <SidebarInset>
@@ -24,7 +39,7 @@ export default function Page() {
             <CardTitle>Your Plan</CardTitle>
           </CardHeader>
           <CardContent>
-            <p>You are currently on the <span className="font-semibold">Free</span> plan.</p>
+            <p>You are currently on the <span className="font-semibold">{isPremium ? "Pro" : "Free"}</span> plan.</p>
           </CardContent>
         </Card>
         <Card>

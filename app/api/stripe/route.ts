@@ -12,13 +12,18 @@ export async function POST(req: Request) {
     return new NextResponse('Unauthorized', { status: 401 })
   }
 
-  const { data: profile } = await supabase
+  const { data: profile, error: profileError } = await supabase
     .from('profiles')
     .select('stripe_customer_id')
     .eq('id', user.id)
     .single()
 
+  console.log("User ID:", user.id);
+  console.log("Profile data:", profile);
+  console.log("Profile error:", profileError);
+
   if (!profile) {
+    console.error("Profile not found for user:", user.id);
     return new NextResponse('Profile not found', { status: 404 })
   }
 

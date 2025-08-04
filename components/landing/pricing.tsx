@@ -25,37 +25,37 @@ export const PLANS: PLAN[] = [
   {
     id: "standard",
     title: "Starter",
-    desc: "Ideal for developers and indie hackers building with Ruixen UI for personal or small commercial projects.",
+    desc: "Ideal for developers and indie hackers building with our template for personal or small commercial projects.",
     monthlyPrice: 29,
     annuallyPrice: 306,
     buttonText: "Get Starter Access",
     features: [
-      "Access to 50+ UI components",
-      "Tailwind-compatible styling",
-      "Basic theming support",
-      "Starter templates (blog, dashboard)",
+      "Access to 50+ components",
+      "Tailwind CSS styling",
+      "Basic theming",
+      "Starter templates",
       "1 project license",
       "Community support",
-      "Early access to updates"
+      "Regular updates"
     ],
     link: "#"
   },
   {
     id: "mastermind",
     title: "Pro",
-    desc: "Designed for teams and startups who need advanced UI components, theme customization, and premium support.",
+    desc: "Designed for teams and startups who need advanced features, and premium support.",
     monthlyPrice: 79,
     annuallyPrice: 834,
     badge: "Best Value",
     buttonText: "Upgrade to Pro",
     features: [
-      "Access to 100+ production-grade components",
+      "Access to 100+ components",
       "Advanced theming & dark mode",
-      "Code snippets & layout presets",
-      "Figma design system access",
+      "Code snippets & presets",
+      "Figma design file access",
       "Commercial use for up to 10 projects",
-      "Priority GitHub issue support",
-      "Team collaboration tools"
+      "Priority support",
+      "Team collaboration"
     ],
     link: "#"
   },

@@ -37,6 +37,9 @@ export function LoginForm({
         password,
       })
       if (error) throw error
+      if (typeof window !== 'undefined' && window.umami) {
+        window.umami.trackEvent('login_success');
+      }
       router.push("/protected")
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred")
@@ -58,6 +61,9 @@ export function LoginForm({
         },
       })
       if (error) throw error
+      if (typeof window !== 'undefined' && window.umami) {
+        window.umami.trackEvent('login_success');
+      }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred")
     } finally {

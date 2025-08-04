@@ -4,11 +4,9 @@ import {
   SidebarInset,
 } from "@/components/ui/sidebar"
 import { SiteHeader } from "@/components/site-header";
-import { cookies } from "next/headers";
 
 export default async function Page() {
-  const cookieStore = await cookies();
-  const supabase = await createClient(cookieStore);
+  const supabase = await createClient();
 
   const {
     data: { user },

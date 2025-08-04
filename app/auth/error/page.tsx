@@ -1,36 +1,36 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+'use client'
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: Promise<{ error: string }>;
-}) {
-  const params = await searchParams;
-
+export default function AuthErrorPage() {
+  const [error, setError] = useState<string | null>(null)
+  const searchParams = useSearchParams()
+  
+  useEffect(() => {
+    const errorParam = searchParams.get('error')
+    setError(errorParam || 'Unknown authentication error')
+  }, [searchParams])
+  
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-sm">
-        <div className="flex flex-col gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-2xl">
-                Sorry, something went wrong.
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {params?.error ? (
-                <p className="text-sm text-muted-foreground">
-                  Code error: {params.error}
-                </p>
-              ) : (
-                <p className="text-sm text-muted-foreground">
-                  An unspecified error occurred.
-                </p>
-              )}
-            </CardContent>
-          </Card>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="max-w-md w-full space-y-8">
+        <div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Authentication Error
+          </h2>
+          <p className="mt-2 text-center text-sm text-gray-600">
+            {error}
+          </p>
+        </div>
+        <div className="mt-5">
+          <a
+            href="/auth/signin"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Try Again
+          </a>
         </div>
       </div>
     </div>
-  );
+  )
 }
