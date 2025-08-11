@@ -1,3 +1,4 @@
+export const runtime = "nodejs";
 import { createClient } from '@/lib/supabase/server'
 import { stripe } from '@/lib/stripe'
 import { absoluteUrl } from '@/lib/utils'

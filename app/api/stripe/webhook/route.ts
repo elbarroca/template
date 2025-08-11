@@ -1,3 +1,4 @@
+export const runtime = "nodejs";
 import { stripe } from '@/lib/stripe'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'

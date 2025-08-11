@@ -123,14 +123,14 @@ export function HeroSection({ user }: { user: User | null }) {
                         <AnimatedGroup
                             variants={transitionVariants as Variants}
                             >
-                            <div className="relative -mr-56 mt-8 overflow-hidden px-2 sm:mr-0 sm:mt-12 md:mt-20">
+                            <div className="relative mt-8 overflow-hidden px-2 sm:mt-12 md:mt-20 mx-auto">
                                 <div
                                     aria-hidden
                                     className="bg-gradient-to-b to-background absolute inset-0 z-10 from-transparent from-35%"
                                 />
-                                <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-6xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
+                                <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto w-full max-w-6xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
                                     <Image
-                                        className="bg-background aspect-15/8 relative rounded-2xl"
+                                        className="bg-background relative rounded-2xl w-full h-auto object-contain object-center md:aspect-[15/8]"
                                         src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.pngplay.com%2Fwp-content%2Fuploads%2F12%2FShrek-PNG-HD-Quality.png&f=1&nofb=1&ipt=f743cf1cd00e3f8771cb79fca813046dc26faaf32b2d7060992b86987f14172c"
                                         alt="app screen"
                                         width="2700"
@@ -256,12 +256,19 @@ const HeroHeader = ({ user }: { user: User | null }) => {
     return (
         <header>
             <motion.nav
-                initial={{ opacity: 0, y: -20 }}
+                initial={{ opacity: 0, y: -16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
+                transition={{ type: 'spring', stiffness: 140, damping: 20 }}
                 data-state={menuState && 'active'}
-                className={cn('fixed z-20 w-full px-2 group', isScrolled && 'bg-background/50 max-w-4xl rounded-2xl border backdrop-blur-lg lg:px-5', 'mx-auto max-w-7xl')}>
-                <div className={cn('mx-auto mt-2 max-w-6xl px-6 transition-all duration-300 lg:px-12', isScrolled && 'bg-background/50 max-w-4xl rounded-2xl border backdrop-blur-lg lg:px-5')}>
+                className={cn(
+                    'fixed inset-x-0 top-0 z-20 px-2 group',
+                    'transition-all duration-300'
+                )}>
+                <div className={cn(
+                    'mx-auto mt-2 max-w-7xl px-6 transition-all duration-500 lg:px-12',
+                    'bg-transparent border-transparent',
+                    isScrolled && 'bg-background/50 max-w-4xl rounded-2xl border backdrop-blur-lg lg:px-5'
+                )}>
                     <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
                         <div className="flex w-full justify-between lg:w-auto">
                             <Link
@@ -296,7 +303,7 @@ const HeroHeader = ({ user }: { user: User | null }) => {
                             </AnimatedGroup>
                         </div>
 
-                        <div className="bg-background group-data-[state=active]:block lg:group-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
+                        <div className="bg-transparent group-data-[state=active]:block lg:group-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border-0 p-6 shadow-none md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:bg-transparent lg:p-0 dark:shadow-none">
                             <div className="lg:hidden">
                                 <AnimatedGroup preset="slide">
                                     <ul className="space-y-6 text-base">
