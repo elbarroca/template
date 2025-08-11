@@ -236,10 +236,9 @@ export function HeroSection({ user }: { user: User | null }) {
 }
 
 const menuItems = [
-    { name: 'Features', href: '/features' },
-    { name: 'Solution', href: '/solution' },
-    { name: 'Pricing', href: '/pricing' },
-    { name: 'About', href: '/about' },
+    { name: 'Features', href: '#features' },
+    { name: 'Pricing', href: '#pricing' },
+    { name: 'Testimonials', href: '#testimonials' },
 ]
 
 const HeroHeader = ({ user }: { user: User | null }) => {

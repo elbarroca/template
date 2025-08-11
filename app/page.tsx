@@ -24,21 +24,23 @@ export default async function LandingPage() {
         </AnimatedSection>        
         
         <AnimatedSection delay={0.4}>
-          <div className="container mx-auto px-4 md:px-8 text-center mt-16">
-              <div className="flex justify-center">
-              <div className="border py-1 px-4 rounded-lg"><LineShadowText>Features</LineShadowText></div>
-            </div>
-
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tighter mt-5 font-sans">
-              Feature <AuroraText>Focus</AuroraText>
-            </h2>
-            <p className="text-center mt-5 opacity-75">
-              Discover the key features that make our product stand out.
-            </p>
-              <div className="mb-24 mt-12">
-              <GlowingEffectDemo />
+          <section id="features" className="scroll-mt-24">
+            <div className="container mx-auto px-4 md:px-8 text-center mt-16">
+                <div className="flex justify-center">
+                <div className="border py-1 px-4 rounded-lg"><LineShadowText>Features</LineShadowText></div>
               </div>
-          </div>
+
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tighter mt-5 font-sans">
+                Feature <AuroraText>Focus</AuroraText>
+              </h2>
+              <p className="text-center mt-5 opacity-75">
+                Discover the key features that make our product stand out.
+              </p>
+                <div className="mb-24 mt-12">
+                <GlowingEffectDemo />
+                </div>
+            </div>
+          </section>
         </AnimatedSection>
         <AnimatedSection delay={0.5}>
           <FeatureImages />
@@ -59,7 +61,9 @@ export default async function LandingPage() {
           </div>
         </AnimatedSection>
         <AnimatedSection delay={0.7}>
-          <Pricing />
+          <section id="pricing" className="scroll-mt-24">
+            <Pricing />
+          </section>
         </AnimatedSection>
         <AnimatedSection delay={0.8}>
           <Testimonials />
