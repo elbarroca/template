@@ -70,7 +70,7 @@ export default function Pricing() {
     };
 
     return (
-        <div className="relative flex flex-col items-center justify-center max-w-5xl py-20 mx-auto">
+        <div className="relative flex flex-col items-center justify-center max-w-5xl py-20 mx-auto px-6 sm:px-8 md:px-10">
 
             <div className="flex flex-col items-center justify-center max-w-2xl mx-auto">
 
@@ -109,7 +109,7 @@ export default function Pricing() {
 const Plan = ({ plan, billPlan }: { plan: PLAN, billPlan: Plan }) => {
     return (
         <div className={cn(
-            "flex flex-col relative rounded-2xl lg:rounded-3xl transition-all bg-background/ items-start w-full border border-foreground/10 overflow-hidden",
+            "flex flex-col relative rounded-2xl lg:rounded-3xl transition-all bg-background items-start w-full border border-foreground/10 overflow-hidden",
             plan.title === "Pro" && "border-orange-500"
         )}>
             {plan.title === "Pro" && (
