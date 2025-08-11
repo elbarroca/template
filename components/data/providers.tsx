@@ -27,13 +27,13 @@ export function Providers({
       disableTransitionOnChange
     >
       <DynamicDefaultSeo
-        title="SaaS MVP Template"
-        description="Clean SaaS starter with free analytics & performance"
+        title="MVP SaaS Template by Barroca"
+        description="Production-ready Next.js SaaS starter with Supabase Auth, Stripe billing, shadcn/ui, charts, and a modern dashboard."
         openGraph={{
           type: 'website',
           locale: 'en_US',
           url: 'https://mvptemplate-git-main-elbarrocas-projects.vercel.app',
-          site_name: 'SaaS MVP Template',
+          site_name: 'MVP SaaS Template by Barroca',
         }}
       />
       <DynamicSidebarProvider>

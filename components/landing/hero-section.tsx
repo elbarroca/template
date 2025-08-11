@@ -355,7 +355,7 @@ const Logo = ({ className }: { className?: string }) => {
         <AnimatedGroup preset="slide">
             <div className={cn("flex items-center space-x-4", className)}>
                 <FrameIcon className="size-5 text-[#FF6B00]" />
-                <span className="text-black dark:text-white text-xl font-bold">MVP <AuroraText>Boilerplate</AuroraText></span>
+                <span className="text-black dark:text-white text-xl font-bold">SaaS <AuroraText>Boilerplate</AuroraText></span>
             </div>
         </AnimatedGroup>
     )
