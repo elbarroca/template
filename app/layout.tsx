@@ -10,8 +10,11 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
-  title: 'Next.js with Supabase',
-  description: 'A Next.js starter with Supabase authentication and database.',
+  title: {
+    default: 'MVP SaaS Template by Barroca',
+    template: '%s | MVP SaaS Template',
+  },
+  description: 'Production-ready Next.js SaaS starter with Supabase Auth, Stripe billing, shadcn/ui, charts, and a modern dashboard.',
 }
 
 export default function RootLayout({
@@ -21,7 +24,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head></head>
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+      </head>
       <body className={inter.className}>
         <Providers>
           {children}
