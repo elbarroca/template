@@ -126,6 +126,45 @@ create policy "Profiles are readable by owners" on public.profiles
 
 On sign‑in we ensure a Stripe customer exists and update `profiles` in `app/auth/callback/route.ts`.
 
+### Detailed schema (constraints, index, trigger)
+
+```sql
+create table public.profiles (
+  id uuid not null,
+  role text not null default 'Free'::text,
+  stripe_customer_id text null,
+  stripe_subscription_id text null,
+  pro_activated_at timestamp with time zone null,
+  last_stripe_payment_at timestamp with time zone null,
+  full_name text null,
+  avatar_url text null,
+  created_at timestamp with time zone null default now(),
+  updated_at timestamp with time zone null default now(),
+  constraint profiles_pkey primary key (id),
+  constraint profiles_stripe_customer_id_key unique (stripe_customer_id),
+  constraint unique_profile_id unique (id),
+  constraint profiles_id_fkey foreign KEY (id) references auth.users (id) on delete CASCADE,
+  constraint default_role_check check (
+    (
+      role = any (array['Free'::text, 'Pro'::text, 'Premium'::text])
+    )
+  ),
+  constraint profiles_role_check check (
+    (
+      role = any (array['Free'::text, 'Pro'::text, 'Premium'::text])
+    )
+  )
+) TABLESPACE pg_default;
+
+create index IF not exists idx_profiles_stripe_customer_id on public.profiles using btree (stripe_customer_id) TABLESPACE pg_default;
+
+create trigger update_profiles_modtime BEFORE
+update on profiles for EACH row
+execute FUNCTION update_modified_column ();
+```
+
+Note: ensure the trigger function `update_modified_column()` exists or create it accordingly in your database.
+
 ## Stripe setup and local testing
 
 1) Create Prices (Pro monthly/annual, Premium monthly/annual) and paste IDs into env (both public and server variants).
