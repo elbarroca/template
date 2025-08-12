@@ -59,8 +59,8 @@ An opinionated, production‑ready Next.js starter that gets you from sign‑up 
 1) Clone and install
 
 ```bash
-git clone <your-repo-url>
-cd Saas_Template
+git clone MVP_Template
+cd MVP_Template
 npm install
 ```
 
@@ -129,38 +129,105 @@ On sign‑in we ensure a Stripe customer exists and update `profiles` in `app/au
 ### Detailed schema (constraints, index, trigger)
 
 ```sql
-create table public.profiles (
-  id uuid not null,
-  role text not null default 'Free'::text,
-  stripe_customer_id text null,
-  stripe_subscription_id text null,
-  pro_activated_at timestamp with time zone null,
-  last_stripe_payment_at timestamp with time zone null,
-  full_name text null,
-  avatar_url text null,
-  created_at timestamp with time zone null default now(),
-  updated_at timestamp with time zone null default now(),
-  constraint profiles_pkey primary key (id),
-  constraint profiles_stripe_customer_id_key unique (stripe_customer_id),
-  constraint unique_profile_id unique (id),
-  constraint profiles_id_fkey foreign KEY (id) references auth.users (id) on delete CASCADE,
-  constraint default_role_check check (
-    (
-      role = any (array['Free'::text, 'Pro'::text, 'Premium'::text])
-    )
-  ),
-  constraint profiles_role_check check (
-    (
-      role = any (array['Free'::text, 'Pro'::text, 'Premium'::text])
-    )
+-- 0) SAFETY: run inside a transaction
+begin;
+
+-- 1) Ensure table exists (yours looks good)
+
+-- 2) Auto-create a profile when a user signs up
+create or replace function public.handle_new_user()
+returns trigger
+language plpgsql
+security definer
+as $$
+begin
+  insert into public.profiles (id, full_name, avatar_url)
+  values (
+    new.id,
+    coalesce(
+      new.raw_user_meta_data->>'full_name',
+      new.raw_user_meta_data->>'name',
+      new.email
+    ),
+    new.raw_user_meta_data->>'avatar_url'
   )
-) TABLESPACE pg_default;
+  on conflict (id) do nothing;
 
-create index IF not exists idx_profiles_stripe_customer_id on public.profiles using btree (stripe_customer_id) TABLESPACE pg_default;
+  return new;
+end;
+$$;
 
-create trigger update_profiles_modtime BEFORE
-update on profiles for EACH row
-execute FUNCTION update_modified_column ();
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created
+after insert on auth.users
+for each row execute function public.handle_new_user();
+
+-- 3) Keep name/avatar in sync if provider metadata changes (optional but useful)
+create or replace function public.handle_user_updated()
+returns trigger
+language plpgsql
+security definer
+as $$
+begin
+  update public.profiles p
+     set full_name = coalesce(
+           new.raw_user_meta_data->>'full_name',
+           new.raw_user_meta_data->>'name',
+           p.full_name
+         ),
+         avatar_url = coalesce(
+           new.raw_user_meta_data->>'avatar_url',
+           p.avatar_url
+         ),
+         updated_at = now()
+   where p.id = new.id;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists on_auth_user_updated on auth.users;
+create trigger on_auth_user_updated
+after update of raw_user_meta_data on auth.users
+for each row
+when (old.raw_user_meta_data is distinct from new.raw_user_meta_data)
+execute function public.handle_user_updated();
+
+-- 4) Backfill for existing users without a profile
+insert into public.profiles (id, full_name, avatar_url)
+select u.id,
+       coalesce(u.raw_user_meta_data->>'full_name',
+                u.raw_user_meta_data->>'name',
+                u.email),
+       u.raw_user_meta_data->>'avatar_url'
+from auth.users u
+left join public.profiles p on p.id = u.id
+where p.id is null;
+
+-- 5) (Recommended) Enable RLS with sane policies
+alter table public.profiles enable row level security;
+
+-- Users can read their own profile
+drop policy if exists "Read own profile" on public.profiles;
+create policy "Read own profile"
+on public.profiles
+for select
+to authenticated
+using (id = auth.uid());
+
+-- Users can update their own profile (but not their role)
+drop policy if exists "Update own profile" on public.profiles;
+create policy "Update own profile"
+on public.profiles
+for update
+to authenticated
+using (id = auth.uid())
+with check (id = auth.uid());
+
+-- Optional: prevent direct updates to role by normal users
+revoke update (role) on public.profiles from authenticated;
+
+commit;
 ```
 
 Note: ensure the trigger function `update_modified_column()` exists or create it accordingly in your database.
